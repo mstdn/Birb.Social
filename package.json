@@ -26,6 +26,7 @@
         "@vue-hero-icons/solid": "^1.7.2",
         "daisyui": "^2.24.0",
         "flowbite": "^1.5.2",
-        "flowbite-vue": "^0.0.5"
+        "flowbite-vue": "^0.0.5",
+        "vue-plyr": "^7.0.0"
     }
 }

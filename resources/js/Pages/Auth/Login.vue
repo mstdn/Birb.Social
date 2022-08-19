@@ -7,6 +7,7 @@ import JetInput from '@/Components/Input.vue';
 import JetInputError from '@/Components/InputError.vue';
 import JetCheckbox from '@/Components/Checkbox.vue';
 import JetLabel from '@/Components/Label.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
     canResetPassword: Boolean,
@@ -30,60 +31,61 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
-
-    <JetAuthenticationCard>
-        <template #logo>
-            <JetAuthenticationCardLogo />
+    <AppLayout title="Login">
+        <template #header>
+            Login
         </template>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+        <div class="border-b border-gray-200
+                            dark:border-dim-200
+                            min-h-screen
+                            border-l border-r
+                            ">
+
+            <div class="flex mx-auto px-4 justify-center pt-10">
+                <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                    {{ status }}
+                </div>
+
+                <form @submit.prevent="submit">
+                    <div>
+                        <JetLabel for="email" value="Email" />
+                        <JetInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" required
+                            autofocus />
+                        <JetInputError class="mt-2" :message="form.errors.email" />
+                    </div>
+
+                    <div class="mt-4">
+                        <JetLabel for="password" value="Password" />
+                        <JetInput id="password" v-model="form.password" type="password" class="mt-1 block w-full"
+                            required autocomplete="current-password" />
+                        <JetInputError class="mt-2" :message="form.errors.password" />
+                    </div>
+
+                    <div class="block mt-4">
+                        <label class="flex items-center">
+                            <JetCheckbox v-model:checked="form.remember" name="remember" />
+                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <Link v-if="canResetPassword" :href="route('password.request')"
+                            class="underline text-sm text-gray-600 hover:text-gray-900">
+                        Forgot your password?
+                        </Link>
+
+                        <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Log in
+                        </JetButton>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <JetLabel for="email" value="Email" />
-                <JetInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                />
-                <JetInputError class="mt-2" :message="form.errors.email" />
-            </div>
 
-            <div class="mt-4">
-                <JetLabel for="password" value="Password" />
-                <JetInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-                <JetInputError class="mt-2" :message="form.errors.password" />
-            </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <JetCheckbox v-model:checked="form.remember" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </Link>
 
-                <JetButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </JetButton>
-            </div>
-        </form>
-    </JetAuthenticationCard>
+    </AppLayout>
 </template>

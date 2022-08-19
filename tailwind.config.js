@@ -8,10 +8,8 @@ module.exports = {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
-        "node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}",
-        "node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
     ],
-    darkMode: "class", // or 'media' or 'class'
+    darkMode: "media", // or 'media' or 'class'
     theme: {
         screens: {
             xs: "614px",
@@ -51,7 +49,17 @@ module.exports = {
     plugins: [
         require("@tailwindcss/forms"),
         require("@tailwindcss/typography"),
-        // require("daisyui"),
-        require("flowbite/plugin"),
+        require("daisyui"),
     ],
+    // daisyUI config (optional)
+    daisyui: {
+        styled: true,
+        themes: false,
+        base: false,
+        utils: false,
+        logs: false,
+        rtl: false,
+        prefix: "",
+        // darkTheme: "dark",
+    },
 };

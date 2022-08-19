@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Overtrue\LaravelLike\Traits\Liker;
+use Illuminate\Notifications\Notifiable;
+use Overtrue\LaravelFollow\Traits\Follower;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Overtrue\LaravelFollow\Traits\Followable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -19,6 +22,9 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Follower;
+    use Followable;
+    use Liker;
 
     /**
      * The attributes that are mass assignable.
@@ -58,4 +64,27 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    // Relation to Items
+    public function posts() 
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function replies() 
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return [
+            'posts' => [
+                'delete' => $this->can('delete-post'),
+            ],
+            'reply' => [
+                'delete' => $this->can('delete-reply'),
+            ]
+        ];
+    }
 }
