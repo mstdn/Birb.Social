@@ -7,6 +7,7 @@ import { Inertia } from "@inertiajs/inertia";
 import Pagination from '../Components/Pagination.vue';
 import Empty from '../Components/Empty.vue';
 import Compose from '../Components/Compose.vue';
+import LoadMore from '../Components/LoadMore.vue';
 
 let props = defineProps({
     posts: Object,
@@ -29,6 +30,8 @@ watch(
         );
     }, 500)
 );
+
+
 </script>
 <template>
     <AppLayout title="Home">
@@ -48,6 +51,7 @@ watch(
             </div>
 
             <Cards v-bind:posts="posts" />
+            <!-- <LoadMore /> -->
             <Pagination :links="posts.links" />
         </div>
 

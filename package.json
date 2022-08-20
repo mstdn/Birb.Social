@@ -27,6 +27,7 @@
         "daisyui": "^2.24.0",
         "flowbite": "^1.5.2",
         "flowbite-vue": "^0.0.5",
+        "v3-infinite-loading": "^1.2.1",
         "vue-plyr": "^7.0.0"
     }
 }

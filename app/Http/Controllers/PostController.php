@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Reply;
 use Illuminate\Support\Str;
@@ -60,7 +61,7 @@ class PostController extends Controller
                 ->when($request->input('search'), function ($query, $search) {
                     $query->where('description', 'like', "%{$search}%");
                 })
-                ->paginate(25)
+                ->paginate(10)
                 ->withQueryString()
                 ->through(fn ($post) => [
                     'id'            =>  $post->id,
@@ -87,18 +88,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function public(Post $post, Reply $reply, Request $request)
+    public function public(Post $post, Request $request)
     {
-        if (Auth::user()) {
-            $liked = $post->isLikedBy(Auth()->user());
-            $delete = Auth::user()->id === $post->user_id || Auth::user()->id === 1;
-            $deleteReply = Auth::user()->id === $reply->user_id || Auth::user()->id === 1;
-        } else {
-            $liked = null;
-            $delete = false;
-            $deleteReply = false;
-        }
-
         return Inertia::render('Posts/Index', [
             'posts' => Post::query()
                 ->latest()
@@ -117,9 +108,9 @@ class PostController extends Controller
                     'avatar'        =>  $post->user->getProfilePhotoUrlAttribute(),
                     'userlink'      =>  '@' . $post->user->username,
                     'image'         =>  'storage/' . $post->image,
-                    'isliked'       =>  $liked,
+                    'isliked'       =>  $post->isLikedBy(auth()->user()),
                     'likes'         =>  $post->likers()->count(),
-                    'delete'        =>  $delete,
+                    'delete'        =>  Auth::user()->id === $post->user_id,
                     'replycount'    =>  $post->replies->count(),
                     'downloadready' =>  $post->converted_for_downloading_at,
                     'image'         =>  '/storage/' . $post->image,
