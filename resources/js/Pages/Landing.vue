@@ -44,7 +44,14 @@ watch(
                 border-l border-r
                 ">
             <Cards v-bind:posts="posts" />
-            <Pagination :links="posts.links" />
+            <div class="btn-group grid grid-cols-2">
+                <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
+                    class="btn btn-xs">Previous</InertiaLink>
+                <button v-else class="btn btn-xs btn-disabled">Previous</button>
+                <InertiaLink v-if="posts.next_page_url !== null" :href="posts.next_page_url"
+                    class="btn btn-xs">Next</InertiaLink>
+                <button v-else class="btn btn-xs btn-disabled">Next</button>
+            </div>
          </div>
 
     </AppLayout>

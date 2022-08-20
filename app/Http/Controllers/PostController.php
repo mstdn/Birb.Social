@@ -61,7 +61,7 @@ class PostController extends Controller
                 ->when($request->input('search'), function ($query, $search) {
                     $query->where('description', 'like', "%{$search}%");
                 })
-                ->paginate(10)
+                ->simplePaginate(5)
                 ->withQueryString()
                 ->through(fn ($post) => [
                     'id'            =>  $post->id,
@@ -117,8 +117,8 @@ class PostController extends Controller
                     'hasimage'      =>  $post->image,
                     'video'         =>  Storage::disk('public')->url('uploads/' . $post->user->id . '/' . 'videos/' . $post->id . '.mp4'),
                 ]),
-                'filters'           =>  $request->only(['search']),
-                'postcount'         =>  Post::latest()->count(),
+            'filters'           =>  $request->only(['search']),
+            'postcount'         =>  Post::latest()->count(),
         ]);
     }
 
