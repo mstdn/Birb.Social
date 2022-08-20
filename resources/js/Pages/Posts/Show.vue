@@ -42,7 +42,6 @@ function destroy(id) {
                 min-h-screen
                 border-l border-r
                 ">
-
             <!-- Tweet -->
             <div class="
                     border-b border-gray-200
@@ -77,7 +76,6 @@ function destroy(id) {
                                     <InertiaLink :href="route('user-profile', { id: post.username })">
                                         {{ post.name }}
                                     </InertiaLink>
-
                                     <span class="
                                         ml-1
                                         text-sm
@@ -92,7 +90,7 @@ function destroy(id) {
                                         <InertiaLink :href="route('user-profile', { id: post.username })">
                                             @{{ post.username }}
                                         </InertiaLink>
-                                        .
+                                        ・
                                         <InertiaLink :href="route('show-post', { id: post.id })">
                                             {{ post.time }}
                                         </InertiaLink>

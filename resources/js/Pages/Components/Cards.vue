@@ -34,7 +34,6 @@
                                 <InertiaLink :href="route('user-profile', { id: post.username })">
                                     {{ post.name }}
                                 </InertiaLink>
-
                                 <span class="
                                     ml-1
                                     text-sm
@@ -49,7 +48,7 @@
                                     <InertiaLink :href="route('user-profile', { id: post.username })">
                                         @{{ post.username }}
                                     </InertiaLink>
-                                    .
+                                    ・
                                     <InertiaLink :href="route('show-post', { id: post.id })">
                                         {{ post.time }}
                                     </InertiaLink>
@@ -183,7 +182,6 @@
                                 </svg>
                                 {{ post.likes }}
                             </a>
-
                             <div class="flex-1 flex items-center">
                                 <Popover v-slot="{ open }" class="relative">
                                     <PopoverButton :class="open ? '' : 'text-gray-600 dark:text-gray-300'"

@@ -98,6 +98,7 @@ class UserController extends Controller
                         'avatar'            =>  $post->user->getProfilePhotoUrlAttribute(),
                         'time'              =>  $post->created_at->diffForHumans(),
                         'username'          =>  $post->user->username,
+                        'name'              =>  $post->user->name,
                         'downloadready'     =>  $post->converted_for_downloading_at,
                         'video'             =>  Storage::disk('public')->url('uploads/' . $post->user->id . '/' . 'videos/' . $post->id . '.mp4'),
                         'status'            =>  $post->status,

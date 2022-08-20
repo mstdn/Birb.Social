@@ -173,39 +173,82 @@
                 </nav>
                 <!-- /Nav -->
 
-                <!-- User Menu -->
-                <div v-if="$page.props.user !== null"
-                    class="w-14 xl:w-full mx-auto mt-auto flex flex-row justify-between mb-5 rounded-full hover:bg-blue-50 dark:hover:bg-dim-800 p-2 cursor-pointer transition duration-350 ease-in-out mb-2">
-                    <div class="flex flex-row">
-                        <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
-                            <img class="w-10 h-10 rounded-full" :src="$page.props.user.profile_photo_url" alt="" />
-                        </InertiaLink>
-                        <div class="hidden xl:block flex flex-col ml-2">
-                            <h1 class="text-gray-800 dark:text-white font-bold text-sm">
-                                <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
-                                    {{ $page.props.user.name }}
-                                </InertiaLink>
-                            </h1>
-                            <p class="text-gray-400 text-sm">
-                                <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
-                                    @{{ $page.props.user.name }}
-                                </InertiaLink>
-                            </p>
+
+                <Popover v-if="$page.props.user !== null" v-slot="{ open }" class="relative">
+                    <PopoverButton :class="open ? '' : 'text-gray-600 dark:text-gray-300'"
+                        class="w-14 xl:w-full mx-auto mt-auto flex flex-row justify-between rounded-full hover:bg-blue-50 dark:hover:bg-dim-800 p-2 cursor-pointer transition duration-350 ease-in-out">
+                        <div class="flex flex-row">
+                            <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
+                                <img class="w-10 h-10 rounded-full" :src="$page.props.user.profile_photo_url" alt="" />
+                            </InertiaLink>
+                            <div class="hidden xl:block flex flex-col ml-2">
+                                <h1 class="text-gray-800 dark:text-white font-bold text-sm">
+                                    <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
+                                        {{ $page.props.user.name }}
+                                    </InertiaLink>
+                                </h1>
+                                <p class="text-gray-400 text-sm">
+                                    <InertiaLink :href="route('user-profile', { id: $page.props.user.username })">
+                                        @{{ $page.props.user.name }}
+                                    </InertiaLink>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="hidden xl:block">
-                        <div class="flex items-center h-full text-gray-800 dark:text-white">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 mr-2">
-                                <g>
-                                    <path
-                                        d="M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z">
-                                    </path>
-                                </g>
-                            </svg>
+                        <div class="hidden xl:block">
+                            <div class="flex items-center h-full text-gray-800 dark:text-white">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 mr-2">
+                                    <g>
+                                        <path
+                                            d="M20.207 8.147c-.39-.39-1.023-.39-1.414 0L12 14.94 5.207 8.147c-.39-.39-1.023-.39-1.414 0-.39.39-.39 1.023 0 1.414l7.5 7.5c.195.196.45.294.707.294s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.022 0-1.413z">
+                                        </path>
+                                    </g>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <!-- /User Menu -->
+                    </PopoverButton>
+
+                    <transition enter-active-class="transition duration-200 ease-out"
+                        enter-from-class="translate-y-1 opacity-0" enter-to-class="translate-y-0 opacity-100"
+                        leave-active-class="transition duration-150 ease-in"
+                        leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
+                        <PopoverPanel
+                            class="absolute left-1/2 z-10 mt-1 w-36 max-w-sm -translate-x-1/2 transform px-4 sm:px-0">
+                            <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                <div class="bg-gray-50 dark:bg-dim-900 dark:text-white p-4">
+                                    <ul>
+                                        <li>
+                                            <InertiaLink
+                                                :href="route('user-profile', { id: $page.props.user.username })">
+                                                Profile
+                                            </InertiaLink>
+                                        </li>
+                                        <li>
+                                            <InertiaLink :href="route('profile.show')"
+                                                :active="route().current('profile.show')">
+                                                Settings
+                                            </InertiaLink>
+                                        </li>
+                                        <li>
+                                            <InertiaLink v-if="$page.props.jetstream.hasApiFeatures"
+                                                :href="route('api-tokens.index')"
+                                                :active="route().current('api-tokens.index')">
+                                                API
+                                            </InertiaLink>
+                                        </li>
+                                        <li>
+                                            <NavLink method="post" :href="route('logout')">
+                                                Logout
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </PopoverPanel>
+                    </transition>
+                </Popover>
+
+
+
             </div>
         </div>
         <!-- /Left -->
@@ -215,5 +258,6 @@
 </template>
 <script setup>
 import NavLink from './NavLink.vue';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 </script>
