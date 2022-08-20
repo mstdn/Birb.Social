@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -29,8 +30,16 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show(Request $request, Category $category)
+    public function show(Request $request, Category $category, Post $post)
     {
+        if (Auth::user()) {
+            $liked = $post->isLikedBy(Auth()->user());
+            $delete = Auth::user()->id === $post->user_id;
+        } else {
+            $liked = null;
+            $delete = false;
+        }
+
         return Inertia::render('Categories/Show', [
             'posts' => $category->posts()->latest()
             ->when($request->input('search'), function ($query, $search) {
@@ -48,9 +57,9 @@ class CategoryController extends Controller
                 'avatar'        =>  $post->user->getProfilePhotoUrlAttribute(),
                 'userlink'      =>  '@' . $post->user->username,
                 'image'         =>  'storage/' . $post->image,
-                'isliked'       =>  $post->isLikedBy(auth()->user()),
+                'isliked'       =>  $liked,
                 'likes'         =>  $post->likers()->count(),
-                'delete'        =>  Auth::user()->id === $post->user_id,
+                'delete'        =>  $delete,
                 'replycount'    =>  $post->replies->count(),
                 'downloadready' =>  $post->converted_for_downloading_at,
                 'image'         =>  '/storage/' . $post->image,
