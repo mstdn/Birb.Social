@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\UserController;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'landing'])->name('landing')->middleware('guest');
 Route::get('@{user:username}', [UserController::class, 'show'])->name('user-profile');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('show-post');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('category');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
     Route::get('/home', [PostController::class, 'home'])->name('home');

@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Reply;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
@@ -61,7 +62,7 @@ class PostController extends Controller
                 ->when($request->input('search'), function ($query, $search) {
                     $query->where('description', 'like', "%{$search}%");
                 })
-                ->simplePaginate(5)
+                ->paginate(20)
                 ->withQueryString()
                 ->through(fn ($post) => [
                     'id'            =>  $post->id,
@@ -178,10 +179,12 @@ class PostController extends Controller
     {
         $post = $request->validate([
             'description'   =>  'required|min:1|max:500',
+            'category'   => ['required', Rule::exists('categories', 'id')],
             'nsfw'          =>  'nullable|boolean',
             'image'         => ['nullable', 'mimes:jpg,jpeg,png,gif', 'max:500048'],
             'video'         =>  'nullable|file|mimetypes:video/x-ms-asf,video/x-flv,video/mp4,video/mpeg,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi|max:10240',
         ]);
+
         $post['user_id'] = auth()->id();
         $storeURL = Str::random(16);
 
@@ -189,6 +192,7 @@ class PostController extends Controller
             $post = Post::create([
                 'user_id'       =>  auth()->id(),
                 'is_nsfw'       =>  $request->nsfw,
+                'category_id'   =>  $request->category,
                 'image'         =>  $request->file('image')->store('uploads/images', 'public'),
                 'description'   =>  $request->description
             ]);
@@ -199,6 +203,7 @@ class PostController extends Controller
             $post = Post::create([
                 'user_id'       =>  auth()->id(),
                 'is_nsfw'       =>  $request->nsfw,
+                'category_id'   =>  $request->category,
                 'disk'          =>  'public',
                 'original_name' =>  $request->file('video')->getClientOriginalName(),
                 'path'          =>  $request->file('video')->store('uploads/' . $request['user_id'] . '/' . 'videos/' . $storeURL, 'public'),
@@ -210,8 +215,10 @@ class PostController extends Controller
             $post = Post::create([
                 'user_id'       =>  auth()->id(),
                 'is_nsfw'       =>  $request->nsfw,
+                'category_id'   =>  $request->category,
                 'description'   =>  $request->description
             ]);
+            
             return back();
         }
     }

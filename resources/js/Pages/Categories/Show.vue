@@ -4,11 +4,8 @@ import Cards from '../Components/Cards.vue';
 import throttle from "lodash/throttle";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import Pagination from '../Components/Pagination.vue';
 import Empty from '../Components/Empty.vue';
 import Compose from '../Components/Compose.vue';
-import LoadMore from '../Components/LoadMore.vue';
-import SimplePagination from '../Components/SimplePagination.vue';
 
 let props = defineProps({
     posts: Object,
@@ -21,7 +18,7 @@ watch(
     search,
     throttle(function (value) {
         Inertia.get(
-            "/home",
+            "/public",
             { search: value },
             {
                 preserveState: true,
@@ -31,13 +28,11 @@ watch(
         );
     }, 500)
 );
-
-
 </script>
 <template>
-    <AppLayout title="Home">
+    <AppLayout title="Public">
         <template #header>
-            Home
+            Public
         </template>
         <Compose />
 
@@ -51,17 +46,31 @@ watch(
                 <Empty />
             </div>
 
-            <Cards :posts="posts" />
-            <div v-if="posts.prev_page_url !== null" class="btn-group grid grid-cols-2 my-4">
-                <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
-                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Previous</InertiaLink>
-                <button v-else class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Previous</button>
-                <InertiaLink v-if="posts.next_page_url !== null" :href="posts.next_page_url"
-                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Next</InertiaLink>
-                <button v-else class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Next</button>
-            </div>
+            <Cards v-bind:posts="posts" />
+            <div 
+                v-if="posts.next_page_url !== null && posts.prev_page_url !== null" 
+                class="text-blue-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
 
+                <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Previous
+                </InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
+                    Previous
+                </button>
+                <InertiaLink v-if="posts.next_page_url !== null" :href="posts.next_page_url"
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Next
+                </InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
+                    Next
+                </button>
+            </div>
         </div>
+
+
 
     </AppLayout>
 </template>

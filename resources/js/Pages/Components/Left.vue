@@ -59,7 +59,7 @@
                             <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6" />
                         </svg>
                         <span class="hidden xl:block ml-4 font-bold text-md">
-                            Home
+                            Feed
                         </span>
                     </NavLink>
 
@@ -70,18 +70,46 @@
                             </path>
                         </svg>
                         <span class="hidden xl:block ml-4 font-bold text-md">
-                            Explore
+                            Public
                         </span>
                     </NavLink>
 
                     <NavLink href="/community" :active="$page.component === 'Users/Community'">
-                        <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z">
-                            </path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                         </svg>
                         <span class="hidden xl:block ml-4 font-bold text-md">
                             Community
+                        </span>
+                    </NavLink>
+
+                    <NavLink href="/categories" :active="$page.component === 'Categories/Index'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span class="hidden xl:block ml-4 font-bold text-md">
+                            Categories
+                        </span>
+                    </NavLink>
+
+                    <NavLink :href="route('user-profile', { id: $page.props.user.username })"
+                        :active="route().current('user-profile', { id: $page.props.user.username })">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3" />
+                            <circle cx="12" cy="10" r="3" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span class="hidden xl:block ml-4 font-bold text-md">
+                            Profile
                         </span>
                     </NavLink>
 

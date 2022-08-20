@@ -24,109 +24,32 @@
                 <div class="bg-gray-50 dark:bg-dim-700 rounded-2xl m-2">
                     <h1
                         class="text-gray-900 dark:text-white text-md font-bold p-3 border-b border-gray-200 dark:border-dim-200">
-                        What’s happening
+                        Categories
                     </h1>
 
                     <!-- Trending Topic -->
-                    <div
+                    <div v-for="category in $page.props.cats.recent" :key="category.id"
                         class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        <h2 class="font-bold text-md text-gray-800 dark:text-white">
-                            #meme
-                        </h2>
-                        <p class="text-xs text-gray-400">29.7K Posts</p>
+                        <InertiaLink :href="route('category', { id: category.slug })">
+                            <h2 class="font-bold text-md text-gray-800 dark:text-white">
+                                {{ category.name }}
+                            </h2>
+                            <p class="text-xs text-gray-400">{{ category.count }} Posts</p>
+                        </InertiaLink>
                     </div>
                     <!-- /Trending Topic -->
 
-                    <!-- Trending Topic -->
-                    <div
-                        class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        <h2 class="font-bold text-md text-gray-800 dark:text-white">
-                            #LOL
-                        </h2>
-                        <p class="text-xs text-gray-400">351K Posts</p>
-                    </div>
-                    <!-- /Trending Topic -->
-
-                    <!-- Trending Topic -->
-                    <div
-                        class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        <h2 class="font-bold text-md text-gray-800 dark:text-white">
-                            #animals
-                        </h2>
-                        <p class="text-xs text-gray-400">52.7K Posts</p>
-                    </div>
-                    <!-- /Trending Topic -->
 
                     <div
                         class="text-blue-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        Show more
+                        <InertiaLink :href="route('categories')">
+                            Show more
+                        </InertiaLink>
                     </div>
                 </div>
                 <!-- /What’s happening -->
 
-                <!-- Who to follow -->
-                <div class="bg-gray-50 dark:bg-dim-700 rounded-2xl m-2">
-                    <h1
-                        class="text-gray-900 dark:text-white text-md font-bold p-3 border-b border-gray-200 dark:border-dim-200">
-                        Who to follow
-                    </h1>
 
-                    <!-- Twitter Account -->
-                    <div
-                        class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        <div class="flex flex-row justify-between p-2">
-                            <div class="flex flex-row">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://media.mstdn.social/accounts/avatars/000/005/168/original/3d4b017a1edb6237.png"
-                                    alt="meow" />
-                                <div class="flex flex-col ml-2">
-                                    <h1 class="text-gray-900 dark:text-white font-bold text-sm">
-                                        stux
-                                    </h1>
-                                    <p class="text-gray-400 text-sm">@stux</p>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="flex items-center h-full text-gray-800 dark:text-white">
-                                    <a href="#"
-                                        class="text-xs font-bold text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Follow</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Twitter Account -->
-
-                    <!-- Twitter Account -->
-                    <div
-                        class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        <div class="flex flex-row justify-between p-2">
-                            <div class="flex flex-row">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://media.mstdn.social/accounts/avatars/000/005/168/original/3d4b017a1edb6237.png"
-                                    alt="meow" />
-                                <div class="flex flex-col ml-2">
-                                    <h1 class="text-gray-900 dark:text-white font-bold text-sm">
-                                        stux
-                                    </h1>
-                                    <p class="text-gray-400 text-sm">@stux</p>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="flex items-center h-full text-gray-800 dark:text-white">
-                                    <a href="#"
-                                        class="text-xs font-bold text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Follow</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Twitter Account -->
-
-                    <div
-                        class="text-blue-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                        Show more
-                    </div>
-                </div>
-                <!-- /Who to follow -->
 
                 <footer>
                     <ul class="text-xs text-gray-500 my-4 mx-2">

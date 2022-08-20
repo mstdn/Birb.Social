@@ -16,7 +16,6 @@ class ReplyController extends Controller
         $replies = $request->validate([
             'reply'         =>  'required|min:1|max:500',
             'image'         => ['nullable', 'mimes:jpg,jpeg,png,gif', 'max:500048'],
-            'video'         =>  'nullable|file|mimetypes:video/x-ms-asf,video/x-flv,video/mp4,video/mpeg,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi|max:10240',
         ]);
 
         $replies['post_id'] = $request['post_id'];
@@ -30,18 +29,6 @@ class ReplyController extends Controller
                 'reply'         =>  $request->reply
             ]);
             return back();
-        }
-
-        if ($request->hasFile('video')) {
-            $post->replies()->create([
-                'user_id'       =>  auth()->id(),
-                'disk'          =>  'public',
-                'original_name' =>  $request->file('video')->getClientOriginalName(),
-                'path'          =>  $request->file('video')->store('uploads/' . $request['user_id'] . '/' . 'videos/' . $storeURL, 'public'),
-                'reply'   =>        $request->reply
-            ]);
-            $this->dispatch(new ConvertReplyVideoForDownload($reply));
-            return back();
         } else {
             $post->replies()->create([
                 'user_id'       =>  auth()->id(),
@@ -49,20 +36,6 @@ class ReplyController extends Controller
             ]);
             return back();
         }
-
-
-        
-        $reply = $request->validate([
-            'reply' => 'required|max:500|min:1'
-        ]);
-
-        $reply['post_id'] = $request['post_id'];
-
-        $reply['user_id'] = auth()->id();
-
-        $post->replies()->create($reply);
-
-        return back();
     }
 
     public function like(Reply $reply)

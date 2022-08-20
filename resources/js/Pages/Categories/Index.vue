@@ -1,15 +1,16 @@
 <script setup>
-import Pagination from "../Components/Pagination.vue";
+import AppLayout from '@/Layouts/AppLayout.vue';
+import Cards from '../Components/Cards.vue';
+import throttle from "lodash/throttle";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import throttle from "lodash/throttle";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import UserCard from "../Components/UserCard.vue";;
+import Empty from '../Components/Empty.vue';
+import Compose from '../Components/Compose.vue';
+import Pagination from '../Components/Pagination.vue'
 
 let props = defineProps({
-    users: Object,
+    categories: Object,
     filters: Object,
-    usercount: String,
 });
 
 let search = ref(props.filters.search);
@@ -18,20 +19,23 @@ watch(
     search,
     throttle(function (value) {
         Inertia.get(
-            "/community",
+            "/categories",
             { search: value },
             {
                 preserveState: true,
                 replace: true,
+                preserveScroll: true
             }
         );
     }, 500)
 );
+
+
 </script>
 <template>
-    <AppLayout title="Community">
+    <AppLayout title="Categories">
         <template #header>
-            Community ({{ usercount }} users)
+            {{ categories.total }} Categories
         </template>
 
         <div class="border-b border-gray-200
@@ -39,6 +43,7 @@ watch(
                             min-h-screen
                             border-l border-r
                             ">
+
             <!-- Search -->
             <div class="relative">
                 <div class="absolute text-gray-600 flex items-center pl-4 h-full cursor-pointer">
@@ -60,65 +65,26 @@ watch(
             <div class="bg-gray-50 dark:bg-dim-700 rounded-2xl my-2">
                 <h1
                     class="text-gray-900 dark:text-white text-md font-bold p-3 border-b border-gray-200 dark:border-dim-200">
-                    Who to follow
+                    Browse Categories
                 </h1>
 
-                <!-- Twitter Account -->
-                <div v-for="profile in users.data" :key="profile.id"
+                <!-- Trending Topic -->
+                <div v-for="category in categories.data" :key="category.id"
                     class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
-                    <InertiaLink :href="route('user-profile', { id: profile.username })">
-                        <div class="flex flex-row justify-between p-2">
-                            <div class="flex flex-row">
-                                <img class="w-10 h-10 rounded-full" :src="profile.pic" :alt="profile.name" />
-                                <div class="flex flex-col ml-2">
-                                    <h1 class="text-gray-900 dark:text-white font-bold text-sm">
-                                        {{ profile.name }}
-                                    </h1>
-                                    <p class="text-gray-400 text-sm">@{{ profile.name }}</p>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="flex items-center h-full text-gray-800 dark:text-white">
-                                    <InertiaLink v-if="
-                                        profile.isFollowing === false &&
-                                        profile.followbutton === false
-                                    " preserveScroll method="post" as="button" type="button" class="
-                            text-xs
-                            font-bold
-                            text-blue-400
-                            px-4
-                            py-1
-                            rounded-full
-                            border-2 border-blue-400
-                            " :href="route('follow', { id: profile.username })">
-                                        + Follow
-                                    </InertiaLink>
-
-                                    <InertiaLink v-if="
-                                    
-                                        profile.isFollowing === true &&
-                                        profile.followbutton === false
-                                    " preserveScroll method="post" as="button" type="button" class="
-                            text-xs
-                            font-bold
-                            text-blue-400
-                            px-4
-                            py-1
-                            rounded-full
-                            border-2 border-blue-400
-                            " :href="route('follow', { id: profile.username })">
-                                        - Unfollow
-                                    </InertiaLink>
-                                </div>
-                            </div>
-                        </div>
+                    <InertiaLink :href="route('category', { id: category.slug })">
+                        <h2 class="font-bold text-md text-gray-800 dark:text-white">
+                            {{ category.name }}
+                        </h2>
+                        <p class="text-xs text-gray-400">{{ category.count }} Posts</p>
                     </InertiaLink>
                 </div>
-                <!-- /Twitter Account -->
-                <div v-if="users.next_page_url !== null"
+                <!-- /Trending Topic -->
+
+
+                <div v-if="categories.next_page_url !== null && categories.prev_page_url !== null"
                     class="text-blue-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
 
-                    <InertiaLink v-if="users.prev_page_url !== null" :href="users.prev_page_url"
+                    <InertiaLink v-if="categories.prev_page_url !== null" :href="categories.prev_page_url"
                         class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
                         Previous
                     </InertiaLink>
@@ -126,7 +92,7 @@ watch(
                         class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
                         Previous
                     </button>
-                    <InertiaLink v-if="users.next_page_url !== null" :href="users.next_page_url"
+                    <InertiaLink v-if="categories.next_page_url !== null" :href="categories.next_page_url"
                         class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
                         Next
                     </InertiaLink>
@@ -134,9 +100,35 @@ watch(
                         class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
                         Next
                     </button>
+
+                    <!-- <Pagination :links="categories.links" /> -->
                 </div>
             </div>
             <!-- /Who to follow -->
+
+
+
+            <!-- <div v-if="categories.prev_page_url !== null" class="btn-group grid grid-cols-2 my-4">
+                <InertiaLink v-if="categories.prev_page_url !== null" :href="categories.prev_page_url"
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Previous
+                </InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
+                    Previous
+                </button>
+                <InertiaLink v-if="categories.next_page_url !== null" :href="categories.next_page_url"
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Next
+                </InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">
+                    Next
+                </button>
+            </div> -->
+
         </div>
+
+
     </AppLayout>
 </template>

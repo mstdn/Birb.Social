@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use App\Models\Reply;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
@@ -47,6 +48,17 @@ class HandleInertiaRequests extends Middleware
 
             'flash' => [
                 'message' => fn () => $request->session()->get('message')
+            ],
+
+            'cats'  => [
+                'recent'    => fn () => Category::all()
+                ->take(10)
+                ->map(fn ($category) => [
+                    'id'        =>  $category->id,
+                    'name'      =>  $category->name,
+                    'slug'      =>  $category->slug,
+                    'count'     =>  $category->posts()->count(),
+                ]),
             ],
             
         ]);

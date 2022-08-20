@@ -38,21 +38,25 @@ watch(
             Public
         </template>
 
-         <div class="border-b border-gray-200
+        <div class="border-b border-gray-200
                 dark:border-dim-200
                 min-h-screen
                 border-l border-r
                 ">
             <Cards v-bind:posts="posts" />
-            <div class="btn-group grid grid-cols-2">
+            <div v-if="posts.prev_page_url !== null" class="btn-group grid grid-cols-2 my-4">
                 <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
-                    class="btn btn-xs">Previous</InertiaLink>
-                <button v-else class="btn btn-xs btn-disabled">Previous</button>
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Previous</InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Previous</button>
                 <InertiaLink v-if="posts.next_page_url !== null" :href="posts.next_page_url"
-                    class="btn btn-xs">Next</InertiaLink>
-                <button v-else class="btn btn-xs btn-disabled">Next</button>
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
+                    Next</InertiaLink>
+                <button v-else
+                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Next</button>
             </div>
-         </div>
+        </div>
 
     </AppLayout>
 </template>

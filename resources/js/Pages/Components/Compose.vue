@@ -18,13 +18,13 @@
                         text-gray-900
                         placeholder-gray-400
                         w-full
-                        h-12
+                        h-14
                         bg-transparent
                         border-0
                         focus:outline-none
                         border-none focus:ring-0 
                         resize-none
-                    " placeholder="What's happening?"></textarea>
+                    " placeholder="Upload and post something funny!"></textarea>
                     </div>
                 </div>
                 <div class="w-full flex items-top p-2 text-white pl-14">
@@ -47,9 +47,7 @@
                         </div>
                         <input name="image" id="image" type="file" @input="form.image = $event.target.files[0]"
                             style="display: none" />
-
                     </label>
-
                     <label>
                         <div class="
                                 text-red-400
@@ -72,19 +70,30 @@
                         <input name="media" id="media" type="file" @input="form.video = $event.target.files[0]"
                             style="display: none" />
                     </label>
-                    
-
                     <p class="p-2 text-gray-400 text-sm">{{ characterCount }}/500</p>
-
                 </div>
 
-                <div class="w-full flex items-top text-gray-900 pl-14 justify-between">
+                <div class="w-full flex items-top text-gray-900 md:pl-14 pl-4 justify-between">
                     <div class="flex justify-start">
-                        <label class="label cursor-pointer">
+                        <select v-model="form.category" name="category" id="category"
+                            class="select select-bordered w-min max-w-xs mt-1 text-blue-400 text-sm font-normal dark:bg-dim-800 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
+                            <option disabled value="">Category</option>
+                            <option value="1" selected>General</option>
+                            <option value="2">Animals</option>
+                            <option value="3">LOL</option>
+                            <option value="4">Videos</option>
+                            <option value="5">Wholesome</option>
+                            <option value="6">Memes</option>
+                            <option value="7">GIFs</option>
+                            <option value="8">News</option>
+                            <option value="9">Anime</option>
+                            <option value="10">Comics</option>
+                        </select>
+                        <label class="label cursor-pointer ml-2">
                             <input v-model="form.nsfw" type="checkbox" name="nsfw" id="nsfw"
-                                class="checkbox checkbox-xs" />
-                            <span class="label-text text-gray-900 dark:text-white ml-2 mr-2 text-sm">
-                                NSFW?
+                                class="checkbox checkbox-xs dark:bg-dim-800" />
+                            <span class="label-text text-gray-900 ml-2 dark:text-white text-sm">
+                                18+
                             </span>
                         </label>
                     </div>
@@ -125,12 +134,13 @@ let form = useForm({
     video: "",
     image: "",
     nsfw: "",
+    category: "1",
 });
 
 let submit = () => {
     form.post("/home", {
         forceFormData: true,
-        onSuccess: () => form.reset("description", "video", "nsfw", "image"),
+        onSuccess: () => form.reset("description", "video", "nsfw", "image", "category"),
     });
 };
 </script>
