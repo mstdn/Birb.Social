@@ -49,7 +49,7 @@ watch(
             </div>
 
             <Cards :posts="posts" />
-            <SimplePagination :posts="posts" />
+            <SimplePagination v-if="posts.total >= 21" :posts="posts" />
         </div>
 
     </AppLayout>

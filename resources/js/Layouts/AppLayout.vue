@@ -40,7 +40,7 @@ const logout = () => {
                     <div
                         v-if="$slots.header" 
                         class="
-                                flex justify-between items-center border-b px-4 py-3 sticky top-0 z-50 
+                                flex justify-between items-center border-b px-4 py-3 sticky top-0 z-10 
                                 bg-white dark:bg-dim-900 
                                 border-l border-r border-gray-200 dark:border-gray-700
                                 ">
