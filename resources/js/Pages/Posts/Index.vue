@@ -48,7 +48,7 @@ watch(
             </div>
 
             <Cards v-bind:posts="posts" />
-            <div v-if="posts.prev_page_url !== null" class="btn-group grid grid-cols-2 my-4">
+            <div class="btn-group grid grid-cols-2 my-4">
                 <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
                     class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">
                     Previous</InertiaLink>
