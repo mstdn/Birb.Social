@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Reply;
 use Illuminate\Support\Str;
@@ -12,7 +11,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\ConvertVideoForDownloading;
 
@@ -62,7 +60,7 @@ class PostController extends Controller
                 ->when($request->input('search'), function ($query, $search) {
                     $query->where('description', 'like', "%{$search}%");
                 })
-                ->paginate(20)
+                ->paginate(3)
                 ->withQueryString()
                 ->through(fn ($post) => [
                     'id'            =>  $post->id,

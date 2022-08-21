@@ -4,10 +4,8 @@ import Cards from '../Components/Cards.vue';
 import throttle from "lodash/throttle";
 import { ref, watch } from "vue";
 import { Inertia } from "@inertiajs/inertia";
-import Pagination from '../Components/Pagination.vue';
 import Empty from '../Components/Empty.vue';
 import Compose from '../Components/Compose.vue';
-import LoadMore from '../Components/LoadMore.vue';
 import SimplePagination from '../Components/SimplePagination.vue';
 
 let props = defineProps({
@@ -32,7 +30,6 @@ watch(
     }, 500)
 );
 
-
 </script>
 <template>
     <AppLayout title="Home">
@@ -52,15 +49,7 @@ watch(
             </div>
 
             <Cards :posts="posts" />
-            <div class="btn-group grid grid-cols-2 my-4">
-                <InertiaLink v-if="posts.prev_page_url !== null" :href="posts.prev_page_url"
-                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Previous</InertiaLink>
-                <button v-else class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Previous</button>
-                <InertiaLink v-if="posts.next_page_url !== null" :href="posts.next_page_url"
-                    class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Next</InertiaLink>
-                <button v-else class="btn font-bold bg-white dark:bg-dim-800 text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400 btn-disabled">Next</button>
-            </div>
-
+            <SimplePagination :posts="posts" />
         </div>
 
     </AppLayout>

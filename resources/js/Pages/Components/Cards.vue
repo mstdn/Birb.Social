@@ -58,21 +58,10 @@
                     </div>
                 </div>
             </div>
-            <div class="pl-16">
-                <div class="
-                    text-base
-                    width-auto
-                    font-medium
-                    text-gray-800
-                    dark:text-white
-                    flex-shrink
-                    pb-5
-                    mr-3
-                    sx:break-all overflow-hidden
-                ">
-                    {{ post.description }}
-                </div>
 
+            
+            <div class="pl-16">
+                
                 <div v-if="post.downloadready !== null" class="flex mb-4 mr-4">
                     <div class="w-full">
                         <vue-plyr :options="options" class="object-fill h-full w-full">
@@ -90,6 +79,22 @@
                         </InertiaLink>
                     </div>
                 </div>
+                
+                <div class="
+                    text-base
+                    width-auto
+                    font-medium
+                    text-gray-800
+                    dark:text-white
+                    flex-shrink
+                    pb-5
+                    mr-3
+                    sx:break-all overflow-hidden
+                ">
+                    {{ post.description }}
+                </div>
+
+                
 
                 <div class="flex">
                     <div class="w-full">
@@ -185,7 +190,7 @@
                             <div class="flex-1 flex items-center">
                                 <Popover v-slot="{ open }" class="relative">
                                     <PopoverButton :class="open ? '' : 'text-gray-600 dark:text-gray-300'"
-                                        class=" text-gray-800 dark:text-white text-xs text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out">
+                                        class=" text-gray-800 dark:text-white text-xs text-gray-400 hover:text-red-400 dark:hover:text-red-400 transition duration-350 ease-in-out">
                                         <span>
                                             <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
                                                 <g>

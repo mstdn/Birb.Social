@@ -15,7 +15,7 @@
                         </svg>
                     </div>
                     <input
-                        class="w-full bg-gray-200 dark:bg-dim-400 border-gray-200 dark:border-dim-400 text-gray-100 focus:bg-gray-100 dark:focus:bg-dim-900 focus:outline-none focus:border focus:border-blue-200 font-normal h-9 flex items-center pl-12 text-sm rounded-full border shadow"
+                        class="w-full bg-gray-200 dark:bg-dim-400 border-gray-200 dark:border-dim-400 text-gray-100 focus:bg-gray-100 dark:focus:bg-dim-900 focus:outline-none focus:border focus:border-red-200 font-normal h-9 flex items-center pl-12 text-sm rounded-full border shadow"
                         placeholder="Search.." />
                 </div>
                 <!-- /Search -->
@@ -29,7 +29,7 @@
 
                     <!-- Trending Topic -->
                     <div v-for="category in $page.props.cats.recent" :key="category.id"
-                        class="text-blue-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
+                        class="text-red-400 text-sm font-normal p-3 border-b border-gray-200 dark:border-dim-200 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
                         <InertiaLink :href="route('category', { id: category.slug })">
                             <h2 class="font-bold text-md text-gray-800 dark:text-white">
                                 {{ category.name }}
@@ -41,7 +41,7 @@
 
 
                     <div
-                        class="text-blue-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
+                        class="text-red-400 text-sm font-normal p-3 hover:bg-gray-100 dark:hover:bg-dim-300 cursor-pointer transition duration-350 ease-in-out">
                         <InertiaLink :href="route('categories')">
                             Show more
                         </InertiaLink>
