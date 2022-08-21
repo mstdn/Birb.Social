@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm } from "@inertiajs/inertia-vue3"
 import { computed } from 'vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import FullImage from '../Components/FullImage.vue';
 
 let props = defineProps({
     post: Object,
@@ -21,7 +22,7 @@ let submit = () => {
     form.post(route('reply', { id: props.post.id }), {
         forceFormData: true,
         preserveScroll: true,
-        onSuccess: () => form.reset("reply", "video", "image"),
+        onSuccess: () => form.reset("reply", "image"),
     });
 };
 
@@ -60,10 +61,10 @@ function destroy(id) {
                         <div class="flex items-top">
                             <div>
                                 <InertiaLink :href="route('user-profile', { id: post.username })">
-                                    <img class="inline-block h-9 w-9 rounded-full" :src="post.avatar" alt="" />
+                                    <img class="inline-block h-8 w-8 rounded-full" :src="post.avatar" alt="" />
                                 </InertiaLink>
                             </div>
-                            <div class="ml-3">
+                            <div class="ml-2">
                                 <p class="
                                     flex
                                     items-center
@@ -100,21 +101,7 @@ function destroy(id) {
                         </div>
                     </div>
                 </div>
-                <div class="pl-16">
-                    <div class="
-                        text-base
-                        width-auto
-                        font-medium
-                        text-gray-800
-                        dark:text-white
-                        flex-shrink
-                        pb-5
-                        mr-3
-                        sx:break-all overflow-hidden
-                    ">
-                        {{ post.description }}
-                    </div>
-
+                <div class="pl-14">
                     <div v-if="post.downloadready !== null" class="flex mb-4 mr-4">
                         <div class="w-full">
                             <vue-plyr :options="options" class="object-fill h-full w-full">
@@ -124,18 +111,31 @@ function destroy(id) {
                             </vue-plyr>
                         </div>
                     </div>
-
                     <div v-if="post.hasimage !== null" class="flex mb-4 pr-4 rounded-2xl min-w-fit">
                         <div class="w-full">
-                            <InertiaLink :href="route('show-post', { id: post.id })">
-                                <img class="rounded-2xl object-fill h-full w-full" :src="post.image" alt="" />
-                            </InertiaLink>
+                            <FullImage :post="post" />
+                            <!-- <input type="image" class="rounded-2xl object-fill h-full w-full" :src="post.image" /> -->
+                            <!-- <img class="rounded-2xl object-fill h-full w-full" :src="post.image" alt="" /> -->
                         </div>
+                    </div>
+                    <div class="
+                        text-base
+                        width-auto
+                        font-medium
+                        text-gray-800
+                        dark:text-white
+                        flex-shrink
+                        pb-5
+                        mr-2
+                        pl-2
+                        sx:break-all overflow-hidden
+                    ">
+                        {{ post.description }}
                     </div>
 
                     <div class="flex">
                         <div class="w-full">
-                            <div class="flex items-center">
+                            <div class="flex items-center pl-2">
                                 <!-- Post replies -->
                                 <InertiaLink :href="route('show-post', { id: post.id })" class="
                                             flex-1 flex
@@ -388,7 +388,7 @@ function destroy(id) {
                         <div class="flex items-top">
                             <div>
                                 <InertiaLink :href="route('user-profile', { id: reply.username })">
-                                    <img class="inline-block h-9 w-9 rounded-full" :src="reply.avatar" alt="" />
+                                    <img class="inline-block h-8 w-8 rounded-full" :src="reply.avatar" alt="" />
                                 </InertiaLink>
                             </div>
                             <div class="ml-3">
@@ -427,7 +427,7 @@ function destroy(id) {
                         </div>
                     </div>
                 </div>
-                <div class="pl-16">
+                <div class="pl-14">
                     <div class="
                         text-base
                         width-auto

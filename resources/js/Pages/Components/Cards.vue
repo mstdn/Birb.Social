@@ -11,7 +11,6 @@
                 duration-350
                 ease-in-out
                 pb-4
-                
             ">
             <div class="flex flex-shrink-0 p-4 pb-0">
                 <div class="flex-shrink-0 group block">
@@ -59,10 +58,9 @@
                 </div>
             </div>
 
-            
-            <div class="pl-16">
+            <div class="pl-14">
                 
-                <div v-if="post.downloadready !== null" class="flex mb-4 mr-4">
+                <div v-if="post.downloadready !== null" class="flex mb-4 mr-2">
                     <div class="w-full">
                         <vue-plyr :options="options" class="object-fill h-full w-full">
                             <video controls crossorigin playsinline>
@@ -72,11 +70,9 @@
                     </div>
                 </div>
 
-                <div v-if="post.hasimage !== null" class="flex mb-4 pr-4 rounded-2xl min-w-fit">
+                <div v-if="post.hasimage !== null" class="flex mb-4 pr-2 rounded-2xl min-w-fit">
                     <div class="w-full">
-                        <InertiaLink :href="route('show-post', { id: post.id })">
-                            <img class="rounded-2xl object-fill h-full w-full" :src="post.image" alt="" />
-                        </InertiaLink>
+                        <FullImage :post="post" />
                     </div>
                 </div>
                 
@@ -93,9 +89,7 @@
                 ">
                     {{ post.description }}
                 </div>
-
-                
-
+            
                 <div class="flex">
                     <div class="w-full">
                         <div class="flex items-center">
@@ -261,6 +255,7 @@
 <script setup>
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
+import FullImage from './FullImage.vue';
 
 const form = useForm();
 function destroy(id) {

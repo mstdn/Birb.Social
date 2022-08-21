@@ -9,8 +9,6 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import VuePlyr from 'vue-plyr';
 import 'vue-plyr/dist/vue-plyr.css';
-import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css";
 
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Kitter';
@@ -25,7 +23,6 @@ createInertiaApp({
             .component('InertiaHead', Head)
             .component('InertiaLink', Link)
             .component('AppLayout', AppLayout)
-            .component("infinite-loading", InfiniteLoading)
             .use(VuePlyr, {
                 plyr: {}
               })
