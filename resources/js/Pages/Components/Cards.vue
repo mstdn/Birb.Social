@@ -12,55 +12,61 @@
                 ease-in-out
                 pb-4
             ">
-            <div class="flex flex-shrink-0 p-4 pb-0">
-                <div class="flex-shrink-0 group block">
+            <div class="flex flex-shrink-0 p-4">
+                <div class="flex-shrink-0 group block min-w-full">
                     <div class="flex items-top">
-                        <div>
-                            <InertiaLink :href="route('user-profile', { id: post.username })">
-                                <img class="inline-block h-9 w-9 rounded-full" :src="post.avatar" alt="" />
-                            </InertiaLink>
-                        </div>
-                        <div class="ml-3">
-                            <p class="
-                                flex
-                                items-center
-                                text-base
-                                leading-6
-                                font-medium
-                                text-gray-800
-                                dark:text-white
-                                ">
-                                <InertiaLink :href="route('user-profile', { id: post.username })">
-                                    {{ post.name }}
-                                </InertiaLink>
-                                <span class="
-                                    ml-1
-                                    text-sm
-                                    leading-5
-                                    font-medium
-                                    text-gray-400
-                                    group-hover:text-gray-300
-                                    transition
-                                    ease-in-out
-                                    duration-150
-                                ">
+                        <div class="flex justify-between min-w-full">
+                            <div class="flex justify-start">
+                                <div>
                                     <InertiaLink :href="route('user-profile', { id: post.username })">
-                                        @{{ post.username }}
+                                        <img class="inline-block h-10 w-10 rounded-full" :src="post.avatar" alt="" />
                                     </InertiaLink>
-                                    ・
+                                </div>
+                                <div class="ml-3">
+                                    <div class="
+                                                text-base
+                                                font-medium
+                                                text-gray-800
+                                                dark:text-white
+                                                ">
+                                        <InertiaLink :href="route('user-profile', { id: post.username })">
+                                            {{ post.name }}
+                                        </InertiaLink>
+                                        <div class="
+                                                    mb-2
+                                                    text-sm
+                                                    text-gray-400
+                                                    group-hover:text-gray-300
+                                                    transition
+                                                    ease-in-out
+                                                    duration-150
+                                                    ">
+                                            <InertiaLink :href="route('user-profile', { id: post.username })">
+                                                @{{ post.username }}
+                                            </InertiaLink>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end mt-2">
+                                <div class="text-xs text-gray-900 dark:text-white">
                                     <InertiaLink :href="route('show-post', { id: post.id })">
                                         {{ post.time }}
                                     </InertiaLink>
-                                </span>
-                            </p>
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <div class="pl-14">
-                
-                <div v-if="post.downloadready !== null" class="flex mb-4 mr-2">
+            <div class="pl-4">
+
+                <div v-if="post.downloadready !== null" class="flex mb-4 mr-4">
                     <div class="w-full">
                         <vue-plyr :options="options" class="object-fill h-full w-full">
                             <video controls crossorigin playsinline>
@@ -70,12 +76,12 @@
                     </div>
                 </div>
 
-                <div v-if="post.hasimage !== null" class="flex mb-4 pr-2 rounded-2xl min-w-fit">
+                <div v-if="post.hasimage !== null" class="flex mb-4 pr-4 pl-2 rounded-md min-w-fit">
                     <div class="w-full">
                         <FullImage :post="post" />
                     </div>
                 </div>
-                
+
                 <div class="
                     text-base
                     width-auto
@@ -85,14 +91,15 @@
                     flex-shrink
                     pb-5
                     mr-3
+                    pl-4
                     sx:break-all overflow-hidden
                 ">
                     {{ post.description }}
                 </div>
-            
+
                 <div class="flex">
                     <div class="w-full">
-                        <div class="flex items-center">
+                        <div class="flex items-center pl-4">
                             <!-- Post replies -->
                             <InertiaLink :href="route('show-post', { id: post.id })" class="
                                         flex-1 flex
@@ -245,7 +252,7 @@
 
                         </div>
                     </div>
-                            
+
                 </div>
             </div>
         </div>
