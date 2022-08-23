@@ -60,9 +60,11 @@
                             <a class="hover:underline" href="#">Privacy Policy</a>
                         </li>
                         <li class="inline-block mx-2">
-                            <a class="hover:underline" href="#">Cookie Policy</a>
+                        <a href="https://github.com/mstdn/Birb.Social" target="_blank" class="hover:underline">
+                            Source Code
+                        </a>
                         </li>
-                        <li class="inline-block mx-2">© 2022. Kitter, Inc.</li>
+                        <li class="inline-block mx-2">© 2022. <a target="_blank" href="https://birb.social">Birb.Social</a></li>
                     </ul>
                 </footer>
             </div>
